@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Me</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, #fbc2eb, #a6c1ee);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background fairies */
+        .fairy {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, white, rgba(255, 255, 255, 0));
+            border-radius: 50%;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        .fairy:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .fairy:nth-child(2) {
+            top: 30%;
+            left: 50%;
+            animation-delay: 1s;
+        }
+
+        .fairy:nth-child(3) {
+            top: 60%;
+            left: 70%;
+            animation-delay: 2s;
+        }
+
+        .fairy:nth-child(4) {
+            top: 80%;
+            left: 30%;
+            animation-delay: 3s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-20px) translateX(10px);
+                opacity: 0.6;
+            }
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .button {
+            padding: 20px 40px;
+            font-size: 2rem;
+            color: #fff;
+            background: linear-gradient(90deg, #ff7eb3, #ff758c, #ff6a68);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            animation: move 2s infinite alternate ease-in-out, shimmer 1.5s infinite;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: skewX(-45deg);
+            transition: left 0.3s;
+        }
+
+        .button:hover {
+            transform: scale(1.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+        }
+
+        .button:hover::after {
+            left: 100%;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateX(-10px);
+            }
+            100% {
+                transform: translateX(10px);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -100px;
+            }
+            100% {
+                background-position: 100px;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .message {
+            text-align: center;
+            color: #fff;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .message h1 {
+            font-size: 5rem;
+            margin: 0;
+            animation: pulse 1.5s infinite;
+        }
+
+        .crying-face {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            background: #ff6f61;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            animation: wobble 2s infinite;
+            margin: 20px auto;
+        }
+
+        .crying-face::before,
+        .crying-face::after {
+            content: '';
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            top: 50px;
+        }
+
+        .crying-face::before {
+            left: 40px;
+        }
+
+        .crying-face::after {
+            right: 40px;
+        }
+
+        .crying-face .mouth {
+            position: absolute;
+            width: 60px;
+            height: 20px;
+            border: 3px solid #fff;
+            border-radius: 0 0 50px 50px;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) rotate(180deg);
+        }
+
+        .crying-face .tear {
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background: #c2e9fb;
+            border-radius: 50%;
+            animation: tearFall 2s infinite ease-in-out;
+        }
+
+        .crying-face .tear.left {
+            left: 30px;
+            top: 70px;
+        }
+
+        .crying-face .tear.right {
+            right: 30px;
+            top: 70px;
+        }
+
+        @keyframes tearFall {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+        }
+
+        @keyframes wobble {
+            0%, 100% {
+                transform: rotate(-5deg);
+            }
+            50% {
+                transform: rotate(5deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="fairy"></div>
+    <div class="fairy"></div>
+    <div class="fairy"></div>
+    <div class="fairy"></div>
+
+    <div class="button-container">
+        <button class="button" onclick="showMessage()">Click Me</button>
+    </div>
+    <div class="hidden" id="message-container">
+        <div class="crying-face">
+            <div class="tear left"></div>
+            <div class="tear right"></div>
+            <div class="mouth"></div>
+        </div>
+        <div class="message">
+            <h1>I Miss You</h1>
+        </div>
+    </div>
+
+    <script>
+        function showMessage() {
+            document.querySelector('.button-container').classList.add('hidden');
+            document.getElementById('message-container').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
